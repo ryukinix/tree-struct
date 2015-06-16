@@ -99,8 +99,8 @@ void type(identifier *id){
                 break;
             default:
                 puts("Invalid option!")
-                type()
-                
+                type(id);
+                break;       
         }
     }  
 }
