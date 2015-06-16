@@ -1,11 +1,11 @@
-# Project Name
+# tree-struct
 
 Few implementations of tree algorithms.
 
 ## History
 
 I'm trying create a binary tree with a smart method to choose any type. 
-Meta-type? To do so, attempting to use:
+Meta-type? To do so, attempting to us:
   * `struct`
   * `union`
   * `enum`
