@@ -1,4 +1,9 @@
-#include <stdio.h>
+/*===========================================================
+ *
+ *  -*-     Some functions to aux on the terminal   -*-
+ *
+ *===========================================================
+ */
 
 // clear the stdin
 void clear_buffer(void) {

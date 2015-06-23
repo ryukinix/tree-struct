@@ -1,98 +1,134 @@
+/*
+ * =====================================================================================
+ *
+ *                      Copyright 2015 Manoel Vilela
+ *
+ *
+ *       Filename:  binary-tree.c
+ *
+ *    Description:  A conceptual implementation of a binary tree
+ *
+ *         Author:  Manoel Vilela
+ *        Contact:  manoel_vilela@engineer.com
+ *   Organization:  UFPA
+ *
+ * =====================================================================================
+**/
+
+
+
+//standard headers
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "types-tree.h"
-#include "clear-pause.h"
+// my headers
+#include "headers/clear-pause.h"
+#include "headers/tree-type.h"
+#include "headers/meta-functions.h"
 
 #define LEFT 0
 #define RIGHT 1
 #define CLEAR "cls || clear"
 
 
-
-// choose the type of a node
-
-
-void type_choose(meta_element *element){
-    int command;  
-    
-    puts("Insert the type that you wish attribute!");
-    puts("1.Char\n2.Int\n3.Real\n");
-
-    printf("Put a command: ");
-    scanf("%d", &command);
-    clear_buffer();
-
-    switch(command){
-        case 1:
-            element->type = character;
-            break;
-        case 2:
-            element->type = integer;
-            break;
-        case 3:
-            element->type = real;
-            break;
-        default:
-            puts("Invalid option! Try again!");
-            type_choose(element);
-            break;       
-    }  
-}
-
-
-meta_element data_input(meta_element element){
-    type_choose(&element);
-    puts("Insert a value: ");
-    if (element.type == integer)
-        scanf("%d", &element.data.integer);
-    else if (element.type == character)
-        scanf("%c", &element.data.character);
-    else if (element.type == real)
-        scanf("%f", &element.data.real);
-
-    return element;
-}
-
-
 void input_tree(tree *t){
-    meta_element thing = data_input(thing);
+    meta_data thing;
+    type_choose(&thing);
+    thing.data = new_thing(thing.type);
     t->stuff = thing;
 
-    //pointer to nil the orientations;
+    //to pointer to nil the orientations;
     t->left = (tree *) NULL;
     t->right = (tree *) NULL;
 
 }
+
+void start_tree(tree *t){
+    puts("== Root of the tree ==");
+    input_tree(t);
+}
+
+/*===========================================================
+ *
+ *  -*-    Some macros to auxiliate the insert function   -*-
+ *
+ *===========================================================
+ */
 
 #define macro_alloc(orientation) \
     t->orientation = (tree *) malloc(sizeof(tree));\
     input_tree(t->orientation);\
 
 
-void insert(tree *t, int direction){
-    if (direction == LEFT){
-        macro_alloc(left);
-    }
-    else if (direction == RIGHT){
-        macro_alloc(right);
-    }
+#define macro_walk(orientation)\
+    if (t->orientation == NULL) {\
+        macro_alloc(orientation);\
+    }\
+    else {\
+        insert(t->orientation);\
+    }\
 
+
+void insert(tree *t){
+    int direction;
+    system(CLEAR);
+    printf("]== Walk on the Tree ==[\n\n");
+    printf("[left] -> %p\n[right] -> %p\n\n", t->left, t->right);
+    printf("Left[0] or right[1]: ");
+    scanf("%d", &direction);
+    clear_buffer();
+
+    if (direction == LEFT) {
+        macro_walk(left);
+    }
+    else if (direction == RIGHT) {
+        macro_walk(right);
+    }
+    else {
+        pause("Wrong direction! Try again.\n");
+        insert(t);
+    }
 }
 
+/*===========================================================
+ *
+ *  -*-   A set of output functions to print the tree   -*-
+ *
+ *===========================================================
+ */
 
 
+#define macro_print(orientation) \
+    printf("\n");\
+    output_tree(deep);\
+    print_tree(t->orientation, deep + 2);\
 
-void search(tree t, meta_element thing);
 
+void output_tree(int deep){
+    int i;
+    for(i = 0; i <= deep; i++)
+        printf("  ");
+    printf("|=>");
+}
 
+void print_tree(tree *t, int deep){
+    print_element(t->stuff);
+    
+    if (t->left != NULL){
+        macro_print(left)
+    }
+    if (t->right != NULL){
+        macro_print(right)
+    }
+}
 
 void menu(tree *t){
     int command;
-
+    
+    system(CLEAR);
     puts("A implementation of binary tree!\n\n");
 
-    printf("1.Insert_l\n2.Insert_r\n3.Remove_n\n4.Print\n0.Exit\n\n");
+    printf("1.Insert\n2.Remove\n3.Search\n4.Print\n0.Exit\n\n");
     printf("Type a command: ");
 
     scanf("%d", &command);
@@ -100,33 +136,34 @@ void menu(tree *t){
 
     switch (command) {
         case 1:
-            insert(t, LEFT);
+            insert(t);
             break;
         case 2:
-            insert(t, RIGHT);
+            printf("Not implemented yet.\n");
             break;
         case 3:
             printf("Not implemented yet.\n");
             break;
         case 4:
-            printf("Not implement yet.\n");
+            puts("A tree representation of data!");
+            print_tree(t, 0);
+            printf("\n");
             break;
         case 0:
             exit(EXIT_SUCCESS);
             break;
         default:
-            printf("You are a crazy?! Don't have these option.\n");
+            printf("You are a crazy?! Don't have this option.\n");
             break;
     }
     pause("Press enter to continue...");
-    system(CLEAR);
     menu(t);
 }
 
 
 int main(int argc, char *argv[]){
     tree t;
-
+    start_tree(&t);
     menu(&t);
 
     return 0;
