@@ -50,7 +50,7 @@ void start_tree(tree *t){
 
 /*===========================================================
  *
- *  -*-    Some macros to auxiliate the insert function   -*-
+ *  -*-    Some macros to auxiliary the insert function   -*-
  *
  *===========================================================
  */
