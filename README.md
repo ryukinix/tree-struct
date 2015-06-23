@@ -1,6 +1,6 @@
 # tree-struct
 
-Few implementations of tree algorithms. On beginning, trying to make a inplementation on ANSI C. 
+Few implementations of tree algorithms. On beginning, trying to make a implementation on ANSI C. 
 
 ## History
 
