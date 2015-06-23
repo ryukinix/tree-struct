@@ -1,6 +1,6 @@
 # tree-struct
 
-Few implementations of tree algorithms.
+Few implementations of tree algorithms. On beginning, trying to make a inplementation on ANSI C. 
 
 ## History
 
@@ -9,6 +9,13 @@ Meta-type? To do so, attempting to us:
   * `struct`
   * `union`
   * `enum`
+
++↑ **Updated**
+
+I did can something! See:
+
+![binary-tree](binary-tree.png)
+
 
 ## Credits
 
