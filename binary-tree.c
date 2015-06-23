@@ -30,18 +30,19 @@
 #define RIGHT 1
 #define CLEAR "cls || clear"
 
+void leaf_node(tree *t){
+    t->left = (tree *) NULL;
+    t->right = (tree *) NULL;
+}
 
 void input_tree(tree *t){
     meta_data thing;
     type_choose(&thing);
     thing.data = new_thing(thing.type);
     t->stuff = thing;
-
-    //to pointer to nil the orientations;
-    t->left = (tree *) NULL;
-    t->right = (tree *) NULL;
-
+    leaf_node(t);
 }
+
 
 void start_tree(tree *t){
     puts("== Root of the tree ==");
