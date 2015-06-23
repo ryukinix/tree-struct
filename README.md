@@ -19,9 +19,11 @@ Meta-type? To do so, attempting to us:
 GPLv3
 
 ## Roadmap
-  - [ ] create a binary tree structure
-  - [ ] implement for any type: ```C
+  - [X] Create a binary tree structure
+  - [X] Implement for any type: ```C
   char, int, float```
-  - [ ] insert method
-  - [ ] search method
-  - [ ] a beautiful way to print output
+  - [X] Insert method
+  - [ ] Search method
+  - [ ] Remove method
+  - [ ] Edit method
+  - [X] A beautiful way to print output
