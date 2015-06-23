@@ -107,7 +107,7 @@ void insert(tree *t){
 void output_tree(int deep){
     int i;
     for(i = 0; i <= deep; i++)
-        printf("  ");
+        printf("   ");
     printf("|=>");
 }
 
@@ -128,7 +128,7 @@ void menu(tree *t){
     system(CLEAR);
     puts("A implementation of binary tree!\n\n");
 
-    printf("1.Insert\n2.Remove\n3.Search\n4.Print\n0.Exit\n\n");
+    printf("1.Insert\n2.Remove\n3.Print\n4.Search\n0.Exit\n\n");
     printf("Type a command: ");
 
     scanf("%d", &command);
@@ -142,14 +142,15 @@ void menu(tree *t){
             printf("Not implemented yet.\n");
             break;
         case 3:
-            printf("Not implemented yet.\n");
-            break;
-        case 4:
             puts("A tree representation of data!");
             print_tree(t, 0);
             printf("\n");
             break;
+        case 4:
+            printf("Not implemented yet.\n");
+            break;
         case 0:
+            printf("Exiting from universe...\n");
             exit(EXIT_SUCCESS);
             break;
         default:
