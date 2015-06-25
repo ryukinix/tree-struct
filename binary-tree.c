@@ -51,7 +51,7 @@ meta_data new_meta() {
 }
 void input_tree(tree *t){
     meta_data thing = new_meta();
-    t->stuff = thing;
+    t->element = thing;
     leaf_node(t);
 }
 
@@ -125,7 +125,7 @@ void output_tree(int deep){
 }
 
 void print_tree(tree *t, int deep){
-    print_element(t->stuff);
+    print_element(t->element);
     
     if (t->left != NULL){
         macro_print(left)
@@ -147,9 +147,10 @@ void print_tree(tree *t, int deep){
         search(t->orientation, element, deep + 1);\
 
 void search(tree *t, meta_data element, int deep){
-    if (element.data.real == t->stuff.data.real){
-        printf("Found a element on deep %d\n", deep);
+    if (meta_comparision(element, t->element)) {
+        printf("Found a element on deep %d: ", deep);
         print_element(element);
+        printf("\n");
     }
 
     search_walk(left);

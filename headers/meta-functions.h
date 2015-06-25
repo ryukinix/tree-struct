@@ -5,6 +5,7 @@
  *===========================================================
  */
 
+#include <stdbool.h>
 
 void print_element(meta_data element) {
     identifier type = element.type;
@@ -37,6 +38,16 @@ something new_thing(identifier type){
     return the_thing;
 }
 
+int meta_comparision(meta_data x, meta_data y){
+    if (x.data.integer == y.data.integer)
+        return true;
+    else if (x.data.character == y.data.character)
+        return true;
+    else if (x.data.real == y.data.real)
+        return true;
+
+    return false;
+}
 
 void type_choose(meta_data *element){
     int command;  

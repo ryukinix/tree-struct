@@ -13,7 +13,7 @@
  */
 
 struct node {
-    meta_data stuff;   
+    meta_data element;   
     struct node *left; 
     struct node *right;
 };
