@@ -30,15 +30,27 @@
 #define RIGHT 1
 #define CLEAR "cls || clear"
 
+/*===========================================================
+ *
+ *  -*-   A basic input functions to manipulate the tree  -*-
+ *
+ *===========================================================
+ */
+
 void leaf_node(tree *t){
     t->left = (tree *) NULL;
     t->right = (tree *) NULL;
 }
 
-void input_tree(tree *t){
+meta_data new_meta() {
     meta_data thing;
     type_choose(&thing);
     thing.data = new_thing(thing.type);
+
+    return thing;
+}
+void input_tree(tree *t){
+    meta_data thing = new_meta();
     t->stuff = thing;
     leaf_node(t);
 }
@@ -51,7 +63,7 @@ void start_tree(tree *t){
 
 /*===========================================================
  *
- *  -*-    Some macros to auxiliary the insert function   -*-
+ *  -*-    Some macros and the insert function   -*-
  *
  *===========================================================
  */
@@ -123,8 +135,39 @@ void print_tree(tree *t, int deep){
     }
 }
 
+/*===========================================================
+ *
+ *  -*-               The search function                -*-
+ *
+ *===========================================================
+ */
+
+#define search_walk(orientation)\
+    if (t->orientation != NULL) \
+        search(t->orientation, element, deep + 1);\
+
+void search(tree *t, meta_data element, int deep){
+    if (element.data.real == t->stuff.data.real){
+        printf("Found a element on deep %d\n", deep);
+        print_element(element);
+    }
+
+    search_walk(left);
+    search_walk(right);
+}
+
+
+
+/*===========================================================
+ *
+ *  -*-           The menu and big main code! :p         -*-
+ *
+ *===========================================================
+ */
+
 void menu(tree *t){
     int command;
+    meta_data element_search;
     
     system(CLEAR);
     puts("A implementation of binary tree!\n\n");
@@ -148,7 +191,8 @@ void menu(tree *t){
             printf("\n");
             break;
         case 4:
-            printf("Not implemented yet.\n");
+            element_search = new_meta();
+            search(t, element_search, 0);
             break;
         case 0:
             printf("Exiting from universe...\n");
@@ -161,6 +205,8 @@ void menu(tree *t){
     pause("Press enter to continue...");
     menu(t);
 }
+
+
 
 
 int main(int argc, char *argv[]){
