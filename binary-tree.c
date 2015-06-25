@@ -147,7 +147,7 @@ void print_tree(tree *t, int deep){
         search(t->orientation, element, deep + 1);\
 
 void search(tree *t, meta_data element, int deep){
-    if (meta_comparision(element, t->element)) {
+    if (union_comparision  (element.data, t->element.data)) {
         printf("Found a element on deep %d: ", deep);
         print_element(element);
         printf("\n");
@@ -166,6 +166,24 @@ void search(tree *t, meta_data element, int deep){
  *===========================================================
  */
 
+#define MENU \
+"\
+1.Start \n\
+2.Insert \n\
+3.Remove \n\
+4.Edit \n\
+5.Search \n\
+6.Print \n\
+7.Sort\n\
+9.Prefix\n\
+10.Posfix\n\
+11.Infix\n\
+12.Balance
+13.Sum of nodes numbers\n\
+14.Sum of leafs numbers\n\
+15.Deepness\n\
+0.Exit\n"
+
 void menu(tree *t){
     int command;
     meta_data element_search;
@@ -173,7 +191,7 @@ void menu(tree *t){
     system(CLEAR);
     puts("A implementation of binary tree!\n\n");
 
-    printf("1.Insert\n2.Remove\n3.Print\n4.Search\n0.Exit\n\n");
+    printf(MENU);
     printf("Type a command: ");
 
     scanf("%d", &command);
@@ -181,17 +199,17 @@ void menu(tree *t){
 
     switch (command) {
         case 1:
-            insert(t);
+            start_tree(t);
             break;
         case 2:
-            printf("Not implemented yet.\n");
+            insert(t);
             break;
-        case 3:
+        case 6:
             puts("A tree representation of data!");
             print_tree(t, 0);
             printf("\n");
             break;
-        case 4:
+        case 5:
             element_search = new_meta();
             search(t, element_search, 0);
             break;
@@ -212,7 +230,6 @@ void menu(tree *t){
 
 int main(int argc, char *argv[]){
     tree t;
-    start_tree(&t);
     menu(&t);
 
     return 0;

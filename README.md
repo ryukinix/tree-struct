@@ -17,6 +17,7 @@ I did can something! See:
 ![binary-tree](binary-tree.png)
 
 
+
 ## Credits
 
   * Me (Manoel Vilela)
@@ -29,8 +30,21 @@ GPLv3
   - [X] Create a binary tree structure
   - [X] Implement for any type: ```C
   char, int, float```
-  - [X] Insert method
-  - [X] Search method
-  - [ ] Remove method
-  - [ ] Edit method
-  - [X] A beautiful way to print output
+  - [ ] Methods
+    - [ ] Start 
+    - [X] Insert 
+    - [ ] Remove     
+    - [ ] Edit 
+    - [X] Search 
+    - [X] Print 
+    - [X] Sort
+    - [ ] Notation
+      - [ ] Prefix
+      - [ ] Posfix
+      - [ ] Infix
+    - [ ] Balance
+  - [ ] Attributes
+    - [ ] Sum of nodes
+    - [ ] Sum of leafs
+    - [ ] Deepness
+  - [X] A beautiful way to print output (i like the current representation)
