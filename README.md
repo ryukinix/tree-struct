@@ -30,7 +30,7 @@ GPLv3
   - [X] Implement for any type: ```C
   char, int, float```
   - [X] Insert method
-  - [ ] Search method
+  - [X] Search method
   - [ ] Remove method
   - [ ] Edit method
   - [X] A beautiful way to print output
