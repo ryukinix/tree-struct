@@ -31,13 +31,13 @@ GPLv3
   - [X] Implement for any type: ```C
   char, int, float```
   - [ ] Methods
-    - [ ] Start 
+    - [X] Start 
     - [X] Insert 
     - [ ] Remove     
     - [ ] Edit 
     - [X] Search 
     - [X] Print 
-    - [X] Sort
+    - [ ] Sort
     - [ ] Notation
       - [ ] Prefix
       - [ ] Posfix
