@@ -113,18 +113,18 @@ void insert(tree *t){
 
 #define macro_print(orientation) \
     printf("\n");\
-    output_tree(deep);\
-    print_tree(t->orientation, deep + 2);\
+    output_tree(deepness);\
+    print_tree(t->orientation, deepness + 2);\
 
 
-void output_tree(int deep){
+void output_tree(int deepness){
     int i;
-    for(i = 0; i <= deep; i++)
+    for(i = 0; i <= deepness; i++)
         printf("   ");
     printf("|=>");
 }
 
-void print_tree(tree *t, int deep){
+void print_tree(tree *t, int deepness){
     print_element(t->element);
     
     if (t->left != NULL){
@@ -142,22 +142,44 @@ void print_tree(tree *t, int deep){
  *===========================================================
  */
 
-#define search_walk(orientation)\
+#define walk(function, orientation)\
     if (t->orientation != NULL) \
-        search(t->orientation, element, deep + 1);\
+        function(t->orientation, element, deepness + 1);\
 
-void search(tree *t, meta_data element, int deep){
+void search(tree *t, meta_data element, int deepness){
     if (union_comparision  (element.data, t->element.data)) {
-        printf("Found a element on deep %d: ", deep);
+        printf("Found a element on deepness %d: ", deepness);
         print_element(element);
         printf("\n");
     }
 
-    search_walk(left);
-    search_walk(right);
+    walk(search, left);
+    walk(search, right);
 }
 
 
+/*===========================================================
+ *
+ *  -*-               The remove_branch function                -*-
+ *
+ *===========================================================
+ */
+
+void null_branch(tree *t, meta_data element, int deepness){
+    free(t);
+    t = NULL;
+}
+
+
+void remove_branch(tree *t, meta_data element, int deepness){
+    if (union_comparision  (element.data, t->element.data)) {
+        printf("Deleted a delicious on deepness %d: ", deepness);
+        null_branch(t, element, deepness);
+    }
+
+    walk(search, left);
+    walk(search, right);
+}
 
 /*===========================================================
  *
@@ -178,11 +200,11 @@ void search(tree *t, meta_data element, int deep){
 9.Prefix\n\
 10.Posfix\n\
 11.Infix\n\
-12.Balance
+12.Balance\
 13.Sum of nodes numbers\n\
 14.Sum of leafs numbers\n\
-15.Deepness\n\
-0.Exit\n"
+15.Deepness\n\n\
+0.Exit\n\n\n"
 
 void menu(tree *t){
     int command;
@@ -204,14 +226,18 @@ void menu(tree *t){
         case 2:
             insert(t);
             break;
-        case 6:
-            puts("A tree representation of data!");
-            print_tree(t, 0);
-            printf("\n");
+        case 3:
+            element_search = new_meta();
+            remove_branch(t, element_search, 0);
             break;
         case 5:
             element_search = new_meta();
             search(t, element_search, 0);
+            break;
+        case 6:
+            puts("A tree representation of data!");
+            print_tree(t, 0);
+            printf("\n");
             break;
         case 0:
             printf("Exiting from universe...\n");
