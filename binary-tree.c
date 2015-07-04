@@ -166,6 +166,12 @@ void search(tree *t, meta_data element, int deepness){
  */
 
 void null_branch(tree *t, meta_data element, int deepness){
+    walk(null_branch, left);
+    walk(null_branch, right);
+    free(t->left);
+    free(t->right);
+    t->left = NULL;
+    t->right = NULL;
     free(t);
     t = NULL;
 }
@@ -175,10 +181,11 @@ void remove_branch(tree *t, meta_data element, int deepness){
     if (union_comparision  (element.data, t->element.data)) {
         printf("Deleted a delicious on deepness %d: ", deepness);
         null_branch(t, element, deepness);
+        return ;
     }
 
-    walk(search, left);
-    walk(search, right);
+    walk(remove_branch, left);
+    walk(remove_branch, right);
 }
 
 /*===========================================================
@@ -200,13 +207,13 @@ void remove_branch(tree *t, meta_data element, int deepness){
 9.Prefix\n\
 10.Posfix\n\
 11.Infix\n\
-12.Balance\
+12.Balance\n\
 13.Sum of nodes numbers\n\
 14.Sum of leafs numbers\n\
 15.Deepness\n\n\
 0.Exit\n\n\n"
 
-void menu(tree *t){
+void menu(tree *t) {
     int command;
     meta_data element_search;
     
@@ -244,7 +251,7 @@ void menu(tree *t){
             exit(EXIT_SUCCESS);
             break;
         default:
-            printf("You are a crazy?! Don't have this option.\n");
+            printf("Not implemented yet.\n");
             break;
     }
     pause("Press enter to continue...");
