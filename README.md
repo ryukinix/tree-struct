@@ -1,18 +1,17 @@
 # tree-struct
 
-Few implementations of tree algorithms. On beginning, trying to make a implementation on ANSI C. 
+An implementation of binary tree algorithms. And it's all written in ANSI C - or pretended to be.
 
 ## History
 
-I'm trying create a binary tree with a smart method to choose any type. 
-Meta-type? To do so, attempting to us:
+I'm creating a binary tree that include support to 3 types of data. They are:
   * `struct`
   * `union`
   * `enum`
 
 +↑ **Updated**
 
-I did can something! See:
+Representing the binary tree below! See:
 
 ![binary-tree](binary-tree.png)
 
@@ -47,4 +46,4 @@ GPLv3
     - [ ] Sum of nodes
     - [ ] Sum of leafs
     - [ ] Deepness
-  - [X] A beautiful way to print output (i like the current representation)
+  - [X] A beautiful way to print output (I like the current representation)
