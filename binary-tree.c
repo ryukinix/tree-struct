@@ -28,7 +28,6 @@
 
 #define LEFT 0
 #define RIGHT 1
-#define CLEAR "cls || clear"
 
 /*===========================================================
  *
@@ -42,16 +41,10 @@ void leaf_node(tree *t){
     t->right = (tree *) NULL;
 }
 
-meta_data new_meta() {
-    meta_data thing;
-    type_choose(&thing);
-    thing.data = new_thing(thing.type);
-
-    return thing;
-}
 void input_tree(tree *t){
-    meta_data thing = new_meta();
-    t->element = thing;
+    meta_data meta;
+    new_meta(&meta);
+    t->element = meta;
     leaf_node(t);
 }
 
@@ -234,11 +227,11 @@ void menu(tree *t) {
             insert(t);
             break;
         case 3:
-            element_search = new_meta();
+            new_meta(&element_search);
             remove_branch(t, element_search, 0);
             break;
         case 5:
-            element_search = new_meta();
+            new_meta(&element_search);
             search(t, element_search, 0);
             break;
         case 6:

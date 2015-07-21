@@ -7,19 +7,47 @@
 
 #include <stdbool.h>
 
-void print_element(meta_data element) {
-    identifier type = element.type;
+void print_element(meta_data meta) {
+    identifier type = meta.type;
 
-    if (element.data.integer != -1) {
+    if (meta.data.integer != -1) {
         if (type == integer)
-            printf(" (%d) ", element.data.integer);
+            printf(" (%d) ", meta.data.integer);
         else if (type == character)
-            printf(" (%c) ", element.data.character);
+            printf(" (%c) ", meta.data.character);
         else if (type == real)
-            printf(" (%.2f) ", element.data.real);
+            printf(" (%.2f) ", meta.data.real);
     } else {
         printf(" () ");
     }
+}
+
+
+void type_choose(meta_data *meta){
+    int command;  
+    
+    puts("Insert the type that you wish attribute!");
+    puts("1.Int\n2.Char\n3.Real\n");
+
+    printf("Put a command: ");
+    scanf("%d", &command);
+    clear_buffer();
+
+    switch(command){
+        case 1:
+            meta->type = integer;
+            break;
+        case 2:
+            meta->type = character;
+            break;
+        case 3:
+            meta->type = real;
+            break;
+        default:
+            puts("Invalid option! Try again!");
+            type_choose(meta);
+            break;       
+    }  
 }
 
 something new_thing(identifier type){
@@ -38,6 +66,11 @@ something new_thing(identifier type){
     return the_thing;
 }
 
+void new_meta(meta_data *meta){
+    type_choose(meta);
+    meta->data = new_thing(meta->type);
+}
+
 int union_comparision(something x, something y){
     if (x.integer == y.integer)
         return true;
@@ -49,29 +82,3 @@ int union_comparision(something x, something y){
     return false;
 }
 
-void type_choose(meta_data *element){
-    int command;  
-    
-    puts("Insert the type that you wish attribute!");
-    puts("1.Int\n2.Char\n3.Real\n");
-
-    printf("Put a command: ");
-    scanf("%d", &command);
-    clear_buffer();
-
-    switch(command){
-        case 1:
-            element->type = integer;
-            break;
-        case 2:
-            element->type = character;
-            break;
-        case 3:
-            element->type = real;
-            break;
-        default:
-            puts("Invalid option! Try again!");
-            type_choose(element);
-            break;       
-    }  
-}
