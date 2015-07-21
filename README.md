@@ -15,7 +15,11 @@ Representing the binary tree below! See:
 
 ![binary-tree](binary-tree.png)
 
+## Compiling and Using
 
+It's very simple, on main directory only do this:
+  * `make`
+  * `./binary-tree.out`
 
 ## Credits
 
@@ -32,7 +36,7 @@ GPLv3
   - [ ] Methods
     - [X] Start 
     - [X] Insert 
-    - [ ] Remove     
+    - [ ] Remove (i'm having problem with double free() | segmentation fault)     
     - [ ] Edit 
     - [X] Search 
     - [X] Print 
