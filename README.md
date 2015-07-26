@@ -37,7 +37,7 @@ GPLv3
     - [X] Start 
     - [X] Insert 
     - [X] Remove      
-    - [ ] Edit 
+    - [X] Edit 
     - [X] Search 
     - [X] Print 
     - [ ] Sort

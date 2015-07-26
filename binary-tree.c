@@ -74,6 +74,50 @@ int empty_tree(tree *root) {
         puts("Tree root not initialized yet! Call start method first!\n"); \
 
 
+
+/*===========================================================
+ *
+ *  -*-   A set of output functions to print the tree   -*-
+ *
+ *===========================================================
+ */
+
+
+#define macro_print(orientation) \
+    printf("\n");\
+    output_tree(deepness);\
+    print(t->orientation, deepness + 2);\
+
+
+void output_tree(int deepness){
+    int i;
+    for(i = 0; i <= deepness; i++)
+        printf("   ");
+    printf("|=>");
+}
+
+void print(tree *t, int deepness) {
+    if (t == NULL){
+        puts("Tree empty!");
+        return;
+    }
+    print_element(t->element);
+    
+    if (t->left != NULL) {
+        macro_print(left)
+    }
+    if (t->right != NULL) {
+        macro_print(right)
+    }
+}
+
+void print_tree(tree *t, int deepness){
+    printf("]== Tree visualization ==[\n\n");
+    printf("=>");
+    print(t, 0);
+    printf("\n");
+}
+
 /*===========================================================
  *
  *  -*-    Some macros and the insert function   -*-
@@ -106,7 +150,12 @@ void element_or_nil(tree *t) {
 int walk_menu (tree *t) {
     int direction;
     system(CLEAR);
-    printf("]== Walk on the Tree ==[\n\n");
+    
+    // tree print
+    print_tree(t, 0);
+
+    // more detailed output for node t
+    printf("\n\n]== Walk on the Tree ==[\n\n");
     printf("[self] -> ");
     element_or_nil(t);
     printf("[left] -> ");
@@ -114,8 +163,10 @@ int walk_menu (tree *t) {
     printf("[right] -> ");
     element_or_nil(t->right);
 
-
-    printf("Left[0] or right[1]: ");
+    //choose the direction for walk
+    puts("\n");
+    printf("]== Your choices ==[\n\n");
+    printf("Left => 0\nRight => 1\n\nType your choice: ");
     scanf("%d", &direction);
     clear_buffer();
 
@@ -142,41 +193,6 @@ void insert_tree(tree *root) {
 }
 
 
-/*===========================================================
- *
- *  -*-   A set of output functions to print the tree   -*-
- *
- *===========================================================
- */
-
-
-#define macro_print(orientation) \
-    printf("\n");\
-    output_tree(deepness);\
-    print_tree(t->orientation, deepness + 2);\
-
-
-void output_tree(int deepness){
-    int i;
-    for(i = 0; i <= deepness; i++)
-        printf("   ");
-    printf("|=>");
-}
-
-void print_tree(tree *t, int deepness) {
-    if (t == NULL){
-        puts("Tree empty!");
-        return;
-    }
-    print_element(t->element);
-    
-    if (t->left != NULL) {
-        macro_print(left)
-    }
-    if (t->right != NULL) {
-        macro_print(right)
-    }
-}
 
 /*===========================================================
  *
@@ -198,6 +214,16 @@ void search(tree *t, meta_data element, int deepness){
 
     walk(search, left);
     walk(search, right);
+}
+
+void search_tree(tree *t){
+    if (t != NULL) {
+        meta_data element;
+        new_meta(&element);
+        search(t, element, 0);
+    } else {
+        printf("Empty tree!\n");
+    }
 }
 
 
@@ -243,6 +269,17 @@ tree* remove_branch(tree *t, meta_data element, int deepness) {
     return t;
 }
 
+tree* remove_tree(tree *t) {
+    if (t != NULL) {
+        meta_data element;
+        new_meta(&element);
+        return remove_branch(t, element, 0);
+    } else {
+        puts("Tree root not initialized yet! Call start method first!\n");
+        return t;
+    }
+
+}
 
 /*===========================================================
  *
@@ -251,8 +288,61 @@ tree* remove_branch(tree *t, meta_data element, int deepness) {
  *===========================================================
  */
 
+
+int edit_or_walk(void) {
+    int decision;
+    puts("You like edit that node or walk?\n");
+    puts("Edit => 1\nWalk => 0\n");
+    scanf("%d", &decision); 
+    clear_buffer();
+
+    if (decision == 0 || decision == 1)
+        return decision;
+    else
+        return edit_or_walk();
+}
+
+
 void edit(tree *t){
-    int direction = walk_menu(t);
+    print_tree(t, 0);
+
+    printf("Selected node: ");
+    print_element(t->element);
+    printf("\n\n");
+    int decision = edit_or_walk();
+
+    if (decision){
+        insert_data(t);
+        return;
+    }
+        
+    else {
+        int direction = walk_menu(t);
+        if (direction == LEFT) {
+            if (t->left != NULL){
+                edit(t->left);
+            }
+            else{
+                printf("Left node not started yet! Insert first.\n");
+                edit(t);
+            }
+        }
+
+        else if (direction == RIGHT) {
+            if (t->right != NULL){
+                edit(t->right);
+            }
+            else{
+                printf("Right node not started yet! Insert first.\n");
+                edit(t);
+            }
+
+        }
+        else {
+            printf("Invalid option! Try again!");
+            edit(t);
+        }
+    } 
 
 }
 
@@ -287,8 +377,7 @@ void edit_tree(tree *root){
 
 void menu(tree *t) {
     int command;
-    meta_data element_search;
-    
+
     system(CLEAR);
     puts("A implementation of binary tree!\n\n");
 
@@ -306,17 +395,16 @@ void menu(tree *t) {
             insert_tree(t);
             break;
         case 3:
-            new_meta(&element_search);
-            t = remove_branch(t, element_search, 0);
+            t = remove_tree(t);
+            break;
+        case 4:
+            edit_tree(t);
             break;
         case 5:
-            new_meta(&element_search);
-            search(t, element_search, 0);
+            search_tree(t);
             break;
         case 6:
-            puts("A tree representation of data!");
             print_tree(t, 0);
-            printf("\n");
             break;
         case 0:
             printf("Exiting from universe...\n");
