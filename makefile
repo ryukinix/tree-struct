@@ -7,4 +7,4 @@ TARGET =  binary-tree
 all: 
 	$(GCC) $(LFLAGS) $(TARGET).out $(TARGET).c
 clean: 
-	rm *.out
+	rm -v *.out
