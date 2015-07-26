@@ -36,7 +36,7 @@ GPLv3
   - [ ] Methods
     - [X] Start 
     - [X] Insert 
-    - [ ] Remove (i'm having problem with double free() | segmentation fault)     
+    - [X] Remove      
     - [ ] Edit 
     - [X] Search 
     - [X] Print 

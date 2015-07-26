@@ -17,7 +17,7 @@
 
 
 
-//standard headers
+// standard headers
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,6 +26,7 @@
 #include "headers/tree-type.h"
 #include "headers/meta-functions.h"
 
+// macro utils 
 #define LEFT 0
 #define RIGHT 1
 
@@ -36,22 +37,24 @@
  *===========================================================
  */
 
-void leaf_node(tree *t){
+void leaf_node(tree *t) {
     t->left = (tree *) NULL;
     t->right = (tree *) NULL;
 }
 
-void input_tree(tree *t){
+void input_tree(tree *t) {
     meta_data meta;
     new_meta(&meta);
     t->element = meta;
     leaf_node(t);
+
 }
 
 
-void start_tree(tree *t){
+void start_tree(tree **t) {
     puts("== Root of the tree ==");
-    input_tree(t);
+    *t = (tree *) malloc(sizeof(tree)); 
+    input_tree(*t);
 }
 
 /*===========================================================
@@ -75,7 +78,7 @@ void start_tree(tree *t){
     }\
 
 
-void insert(tree *t){
+int walk_menu (tree *t) {
     int direction;
     system(CLEAR);
     printf("]== Walk on the Tree ==[\n\n");
@@ -83,6 +86,13 @@ void insert(tree *t){
     printf("Left[0] or right[1]: ");
     scanf("%d", &direction);
     clear_buffer();
+
+    return direction;
+}
+
+
+void insert(tree *t){
+    int direction = walk_menu(t);
 
     if (direction == LEFT) {
         macro_walk(left);
@@ -95,6 +105,13 @@ void insert(tree *t){
         insert(t);
     }
 }
+void insert_tree(tree *t) {
+    if (t != NULL)
+        insert(t);
+    else
+        puts("Tree not initialized yet! Call start method first!\n");
+}
+
 
 /*===========================================================
  *
@@ -117,13 +134,17 @@ void output_tree(int deepness){
     printf("|=>");
 }
 
-void print_tree(tree *t, int deepness){
+void print_tree(tree *t, int deepness) {
+    if (t == NULL){
+        puts("Tree empty!");
+        return;
+    }
     print_element(t->element);
     
-    if (t->left != NULL){
+    if (t->left != NULL) {
         macro_print(left)
     }
-    if (t->right != NULL){
+    if (t->right != NULL) {
         macro_print(right)
     }
 }
@@ -158,27 +179,38 @@ void search(tree *t, meta_data element, int deepness){
  *===========================================================
  */
 
-void null_branch(tree *t, meta_data element, int deepness){
-    walk(null_branch, left);
-    walk(null_branch, right);
-    free(t->left);
-    free(t->right);
-    t->left = NULL;
-    t->right = NULL;
+tree* null_branch(tree *t){
+    // walk at left
+    if (t != NULL)
+        t->left = null_branch(t->left);
+    // walk at right
+    if (t != NULL)
+        t->right = null_branch(t->right);
+    
+    // free the pointer node
     free(t);
+    
+    // points to nil
     t = NULL;
+
+    return t;
 }
 
 
-void remove_branch(tree *t, meta_data element, int deepness){
-    if (union_comparision  (element.data, t->element.data)) {
+tree* remove_branch(tree *t, meta_data element, int deepness) {
+    if (union_comparision (element.data, t->element.data)) {
         printf("Deleted a delicious on deepness %d: ", deepness);
-        null_branch(t, element, deepness);
-        return ;
-    }
-
-    walk(remove_branch, left);
-    walk(remove_branch, right);
+        print_element(element);
+        printf("\n");
+        t = null_branch(t);
+    } else {
+        if (t->left != NULL)
+            t->left = remove_branch(t->left, element, deepness + 1);
+        if (t->right != NULL)
+            t->right = remove_branch(t->right, element, deepness + 1);
+    }  
+    
+    return t;
 }
 
 /*===========================================================
@@ -221,14 +253,14 @@ void menu(tree *t) {
 
     switch (command) {
         case 1:
-            start_tree(t);
+            start_tree(&t);
             break;
         case 2:
-            insert(t);
+            insert_tree(t);
             break;
         case 3:
             new_meta(&element_search);
-            remove_branch(t, element_search, 0);
+            t = remove_branch(t, element_search, 0);
             break;
         case 5:
             new_meta(&element_search);
@@ -255,8 +287,9 @@ void menu(tree *t) {
 
 
 int main(int argc, char *argv[]){
-    tree t;
-    menu(&t);
+    tree *t = NULL;
+   
+    menu(t);
 
     return 0;
 }
