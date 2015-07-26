@@ -61,19 +61,106 @@ void start_tree(tree **t) {
 }
 
 int empty_tree(tree *root) {
-    if (root == NULL)
+    if (root == NULL){
+        puts("Tree root not initialized yet! Call start method first!\n");
         return true;
-    else
+    }
+    else{
         return false;
+    }
 }
 
-#define verify_empty(function) \
-    if (empty_tree(root) == false) \
-        function(root); \
-    else \
-        puts("Tree root not initialized yet! Call start method first!\n"); \
+/*===========================================================
+ *
+ *  -*-            Some attributes of tree             -*-
+ *
+ *===========================================================
+ */
+
+int isleaf(tree *t) {
+    return (t->left == NULL) && (t->right == NULL);
+}
+
+int nodes_sum(tree *t, int nodes) {
+    // verify the node is not null
+    if (t == NULL)
+        return nodes;
+    
+    // walk to left
+    if (t->left != NULL)
+        nodes = nodes_sum(t->left, nodes);
+
+    // walk to right
+    if (t->right != NULL)
+        nodes = nodes_sum(t->right, nodes);
+
+    return nodes + 1;
+}
+
+int leaf_sum(tree *t, int leafs) {
+    // verify the node is not null
+    if (t == NULL)
+        return leafs;
+
+    // walk to left
+    if (t->left != NULL)
+        leafs = leaf_sum(t->left, leafs);
+
+    // walk to right
+    if (t->right != NULL)
+        leafs = leaf_sum(t->right, leafs);
+
+    if (isleaf(t))
+        leafs += 1;
+
+    return leafs;
+
+}
+
+int deepness_sum(tree *t, int deepness) {
+    int left  = deepness;
+    int right = deepness;
+    // verify the node is not null
+    if (t == NULL)
+        return deepness;
+
+    // walk to left
+    if (t->left != NULL)
+        left = deepness_sum(t->left, deepness + 1);
+
+    // walk to right
+    if (t->right != NULL)
+        right = deepness_sum(t->right, deepness + 1);
+
+    
+    return left >= right ? left : right;
+
+}
 
 
+
+// abstract functions with output messages and other things
+void nodes_count(tree *t){
+    if (empty_tree(t))
+        return;
+    printf("]== Nodes Calculation ==[\n\n");
+    int nodes = nodes_sum(t, 0);
+    printf("Nodes: %d\n", nodes);
+}
+void leaf_count(tree *t){
+    if (empty_tree(t))
+        return;
+    printf("]== Leafs Calculation ==[\n\n");
+    int leafs = leaf_sum(t, 0);
+    printf("Leafs: %d\n", leafs);
+}
+void deepness_count(tree *t){
+    if (empty_tree(t))
+        return;
+    printf("]== Deepness Calculation ==[\n\n");
+    int deepness = deepness_sum(t, 0);
+    printf("Deepness: %d\n", deepness);
+}
 
 /*===========================================================
  *
@@ -111,7 +198,7 @@ void print(tree *t, int deepness) {
     }
 }
 
-void print_tree(tree *t, int deepness){
+void print_tree(tree *t){
     printf("]== Tree visualization ==[\n\n");
     printf("=>");
     print(t, 0);
@@ -152,7 +239,7 @@ int walk_menu (tree *t) {
     system(CLEAR);
     
     // tree print
-    print_tree(t, 0);
+    print_tree(t);
 
     // more detailed output for node t
     printf("\n\n]== Walk on the Tree ==[\n\n");
@@ -189,7 +276,8 @@ void insert(tree *t){
     }
 }
 void insert_tree(tree *root) {
-    verify_empty(insert)
+    if (empty_tree(root));
+        insert(root);
 }
 
 
@@ -236,10 +324,10 @@ void search_tree(tree *t){
  */
 
 tree* null_branch(tree *t){
-    // walk at left
+    // walk to left
     if (t != NULL)
         t->left = null_branch(t->left);
-    // walk at right
+    // walk to right
     if (t != NULL)
         t->right = null_branch(t->right);
     
@@ -304,7 +392,7 @@ int edit_or_walk(void) {
 
 
 void edit(tree *t){
-    print_tree(t, 0);
+    print_tree(t);
 
     printf("Selected node: ");
     print_element(t->element);
@@ -347,7 +435,8 @@ void edit(tree *t){
 }
 
 void edit_tree(tree *root){
-    verify_empty(edit);
+    if(empty_tree(root))
+        edit(root);
 }
 
 /*===========================================================
@@ -404,7 +493,16 @@ void menu(tree *t) {
             search_tree(t);
             break;
         case 6:
-            print_tree(t, 0);
+            print_tree(t);
+            break;
+        case 13:
+            nodes_count(t);
+            break;
+        case 14:
+            leaf_count(t);
+            break;
+        case 15:
+            deepness_count(t);
             break;
         case 0:
             printf("Exiting from universe...\n");

@@ -46,8 +46,8 @@ GPLv3
       - [ ] Posfix
       - [ ] Infix
     - [ ] Balance
-  - [ ] Attributes
-    - [ ] Sum of nodes
-    - [ ] Sum of leafs
-    - [ ] Deepness
+  - [X] Attributes
+    - [X] Sum of nodes
+    - [X] Sum of leafs
+    - [X] Deepness
   - [X] A beautiful way to print output (I like the current representation)
