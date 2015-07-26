@@ -20,6 +20,7 @@
 // standard headers
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 // my headers
 #include "headers/clear-pause.h"
@@ -42,20 +43,36 @@ void leaf_node(tree *t) {
     t->right = (tree *) NULL;
 }
 
-void input_tree(tree *t) {
+void insert_data(tree *t) { 
     meta_data meta;
     new_meta(&meta);
     t->element = meta;
-    leaf_node(t);
-
 }
 
+void input_tree(tree *t) {
+    insert_data(t);
+    leaf_node(t);
+}
 
 void start_tree(tree **t) {
     puts("== Root of the tree ==");
     *t = (tree *) malloc(sizeof(tree)); 
     input_tree(*t);
 }
+
+int empty_tree(tree *root) {
+    if (root == NULL)
+        return true;
+    else
+        return false;
+}
+
+#define verify_empty(function) \
+    if (empty_tree(root) == false) \
+        function(root); \
+    else \
+        puts("Tree root not initialized yet! Call start method first!\n"); \
+
 
 /*===========================================================
  *
@@ -78,11 +95,26 @@ void start_tree(tree **t) {
     }\
 
 
+void element_or_nil(tree *t) {
+    if (t != NULL)
+        print_element(t->element);
+    else
+        printf("%p", t);
+    printf("\n");
+}
+
 int walk_menu (tree *t) {
     int direction;
     system(CLEAR);
     printf("]== Walk on the Tree ==[\n\n");
-    printf("[left] -> %p\n[right] -> %p\n\n", t->left, t->right);
+    printf("[self] -> ");
+    element_or_nil(t);
+    printf("[left] -> ");
+    element_or_nil(t->left);
+    printf("[right] -> ");
+    element_or_nil(t->right);
+
+
     printf("Left[0] or right[1]: ");
     scanf("%d", &direction);
     clear_buffer();
@@ -105,11 +137,8 @@ void insert(tree *t){
         insert(t);
     }
 }
-void insert_tree(tree *t) {
-    if (t != NULL)
-        insert(t);
-    else
-        puts("Tree not initialized yet! Call start method first!\n");
+void insert_tree(tree *root) {
+    verify_empty(insert)
 }
 
 
@@ -172,9 +201,10 @@ void search(tree *t, meta_data element, int deepness){
 }
 
 
+
 /*===========================================================
  *
- *  -*-               The remove_branch function                -*-
+ *  -*-           The remove_branch function         -*-
  *
  *===========================================================
  */
@@ -211,6 +241,23 @@ tree* remove_branch(tree *t, meta_data element, int deepness) {
     }  
     
     return t;
+}
+
+
+/*===========================================================
+ *
+ *  -*-              The edit function               -*-
+ *
+ *===========================================================
+ */
+
+void edit(tree *t){
+    int direction = walk_menu(t);
+
+}
+
+void edit_tree(tree *root){
+    verify_empty(edit);
 }
 
 /*===========================================================
