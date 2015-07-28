@@ -7,21 +7,21 @@
 
 #include <stdbool.h>
 
-void print_element(meta_data meta) {
+void print_meta(meta_data meta){
     identifier type = meta.type;
-
-    if (meta.data.integer != -1) {
-        if (type == integer)
-            printf(" (%d) ", meta.data.integer);
-        else if (type == character)
-            printf(" (%c) ", meta.data.character);
-        else if (type == real)
-            printf(" (%.2f) ", meta.data.real);
-    } else {
-        printf(" () ");
-    }
+    if (type == integer)
+        printf("%d", meta.data.integer);
+    else if (type == character)
+        printf("%c", meta.data.character);
+    else if (type == real)
+        printf("%.2f", meta.data.real);
 }
 
+void print_element(meta_data meta) {
+    printf(" (");
+    print_meta(meta);
+    printf(") ");
+}
 
 void type_choose(meta_data *meta){
     int command;  
