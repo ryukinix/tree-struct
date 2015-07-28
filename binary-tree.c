@@ -205,6 +205,38 @@ void print_tree(tree *t){
     printf("\n");
 }
 
+
+/*===========================================================
+ *
+ *  -*-          Output notation functions!              -*-
+ *
+ *===========================================================
+ */
+
+
+ void prefix_notation(tree *t){
+    if (empty_tree(t))
+        return;
+
+    printf("(");
+    print_meta(t->element);
+    
+    if (t->left != NULL)
+        prefix_notation(t->left);
+    if (t->right != NULL)
+        prefix_notation(t->right);
+
+    printf(")");
+
+ }
+
+ void prefix_print(tree *t){
+    printf("]== Prefix Notation ==[\n\n");
+    printf("\t");
+    prefix_notation(t);
+    printf("\n\n");
+ }
+
 /*===========================================================
  *
  *  -*-    Some macros and the insert function   -*-
@@ -435,7 +467,7 @@ void edit(tree *t){
 }
 
 void edit_tree(tree *root){
-    if(empty_tree(root))
+    if(!empty_tree(root))
         edit(root);
 }
 
@@ -494,6 +526,9 @@ void menu(tree *t) {
             break;
         case 6:
             print_tree(t);
+            break;
+        case 9:
+            prefix_print(t);
             break;
         case 13:
             nodes_count(t);

@@ -42,7 +42,7 @@ GPLv3
     - [X] Print 
     - [ ] Sort
     - [ ] Notation
-      - [ ] Prefix
+      - [X] Prefix
       - [ ] Posfix
       - [ ] Infix
     - [ ] Balance
