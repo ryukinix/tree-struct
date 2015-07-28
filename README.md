@@ -45,6 +45,8 @@ GPLv3
       - [X] Prefix
       - [ ] Posfix
       - [ ] Infix
+        - [X] Some implemantion
+        - [ ] Work Correct
     - [ ] Balance
   - [X] Attributes
     - [X] Sum of nodes
