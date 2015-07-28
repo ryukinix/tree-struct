@@ -214,11 +214,11 @@ void print_tree(tree *t){
  */
 
 
- void prefix_notation(tree *t){
+void prefix_notation(tree *t){
     if (empty_tree(t))
         return;
 
-    printf("(");
+    printf(" ( ");
     print_meta(t->element);
     
     if (t->left != NULL)
@@ -226,16 +226,37 @@ void print_tree(tree *t){
     if (t->right != NULL)
         prefix_notation(t->right);
 
-    printf(")");
+    printf(" ) ");
 
- }
+}
 
- void prefix_print(tree *t){
+void infix_notation(tree *t){
+    if (empty_tree(t))
+        return;
+    
+    if (t->left != NULL)
+        infix_notation(t->left);
+    
+    print_element(t->element);
+    
+    if (t->right != NULL)
+        infix_notation(t->right);
+}
+
+void infix_print(tree *t){
+    printf("]== Infix Notation ==[\n\n");
+    printf("\t");
+    infix_notation(t);
+    printf("\n\n");
+}
+
+
+void prefix_print(tree *t){
     printf("]== Prefix Notation ==[\n\n");
     printf("\t");
     prefix_notation(t);
     printf("\n\n");
- }
+}
 
 /*===========================================================
  *
@@ -529,6 +550,9 @@ void menu(tree *t) {
             break;
         case 9:
             prefix_print(t);
+            break;
+        case 11:
+            infix_print(t);
             break;
         case 13:
             nodes_count(t);
