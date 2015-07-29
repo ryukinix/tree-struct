@@ -289,7 +289,6 @@ void element_or_nil(tree *t) {
 
 int walk_menu (tree *t) {
     int direction;
-    system(CLEAR);
     
     // tree print
     print_tree(t);
@@ -315,6 +314,7 @@ int walk_menu (tree *t) {
 
 
 void insert(tree *t){
+    system(CLEAR);
     int direction = walk_menu(t);
 
     if (direction == LEFT) {
@@ -433,7 +433,7 @@ tree* remove_tree(tree *t) {
 int edit_or_walk(void) {
     int decision;
     puts("You like edit that node or walk?\n");
-    puts("Edit => 1\nWalk => 0\n");
+    puts("Walk => 0\nEdit => 1\n");
     scanf("%d", &decision); 
     clear_buffer();
 
@@ -445,6 +445,7 @@ int edit_or_walk(void) {
 
 
 void edit(tree *t){
+    system(CLEAR);
     print_tree(t);
 
     printf("Selected node: ");

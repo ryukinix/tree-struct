@@ -4,14 +4,7 @@ An implementation of binary tree algorithms. And it's all written in ANSI C - or
 
 ## History
 
-I'm creating a binary tree that include support to 3 types of data. They are:
-  * `struct`
-  * `union`
-  * `enum`
-
-+↑ **Updated**
-
-Representing the binary tree below! See:
+That it's actual status of my implementation: 
 
 ![binary-tree](binary-tree.png)
 
@@ -31,8 +24,7 @@ GPLv3
 
 ## Roadmap
   - [X] Create a binary tree structure
-  - [X] Implement for any type: ```C
-  char, int, float```
+  - [X] Implement for any type: `char, int, float`
   - [ ] Methods
     - [X] Start 
     - [X] Insert 
