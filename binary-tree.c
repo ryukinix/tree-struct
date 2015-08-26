@@ -27,7 +27,7 @@
 #include "headers/tree-type.h"
 #include "headers/meta-functions.h"
 
-// macro utils 
+// macro utils
 #define LEFT 0
 #define RIGHT 1
 
@@ -43,29 +43,33 @@ void leaf_node(tree *t) {
     t->right = (tree *) NULL;
 }
 
-void insert_data(tree *t) { 
+
+void insert_data(tree *t) {
     meta_data meta;
     new_meta(&meta);
     t->element = meta;
 }
+
 
 void input_tree(tree *t) {
     insert_data(t);
     leaf_node(t);
 }
 
+
 void start_tree(tree **t) {
     puts("== Root of the tree ==");
-    *t = (tree *) malloc(sizeof(tree)); 
+    *t = (tree *) malloc(sizeof(tree));
     input_tree(*t);
 }
+
 
 int empty_tree(tree *root) {
     if (root == NULL){
         puts("Tree root not initialized yet! Call start method first!\n");
         return true;
     }
-    else{
+    else {
         return false;
     }
 }
@@ -81,11 +85,11 @@ int isleaf(tree *t) {
     return (t->left == NULL) && (t->right == NULL);
 }
 
+
 int nodes_sum(tree *t, int nodes) {
     // verify the node is not null
     if (t == NULL)
         return nodes;
-    
     // walk to left
     if (t->left != NULL)
         nodes = nodes_sum(t->left, nodes);
@@ -96,6 +100,7 @@ int nodes_sum(tree *t, int nodes) {
 
     return nodes + 1;
 }
+
 
 int leaf_sum(tree *t, int leafs) {
     // verify the node is not null
@@ -132,7 +137,6 @@ int deepness_sum(tree *t, int deepness) {
     if (t->right != NULL)
         right = deepness_sum(t->right, deepness + 1);
 
-    
     return left >= right ? left : right;
 
 }
@@ -147,6 +151,8 @@ void nodes_count(tree *t){
     int nodes = nodes_sum(t, 0);
     printf("Nodes: %d\n", nodes);
 }
+
+
 void leaf_count(tree *t){
     if (empty_tree(t))
         return;
@@ -154,6 +160,8 @@ void leaf_count(tree *t){
     int leafs = leaf_sum(t, 0);
     printf("Leafs: %d\n", leafs);
 }
+
+
 void deepness_count(tree *t){
     if (empty_tree(t))
         return;
@@ -183,13 +191,9 @@ void output_tree(int deepness){
     printf("|=>");
 }
 
+
 void print(tree *t, int deepness) {
-    if (t == NULL){
-        puts("Tree empty!");
-        return;
-    }
     print_element(t->element);
-    
     if (t->left != NULL) {
         macro_print(left)
     }
@@ -198,11 +202,14 @@ void print(tree *t, int deepness) {
     }
 }
 
-void print_tree(tree *t){
-    printf("]== Tree visualization ==[\n\n");
-    printf("=>");
-    print(t, 0);
-    printf("\n");
+
+void print_tree(tree *root){
+    if (!empty_tree(root)) {
+        printf("]== Tree visualization ==[\n\n");
+        printf("=>");
+        print(root, 0);
+        printf("\n");
+    } 
 }
 
 
@@ -214,13 +221,9 @@ void print_tree(tree *t){
  */
 
 
-void prefix_notation(tree *t){
-    if (empty_tree(t))
-        return;
-
+void prefix_notation(tree *t) { 
     printf(" ( ");
     print_meta(t->element);
-    
     if (t->left != NULL)
         prefix_notation(t->left);
     if (t->right != NULL)
@@ -230,10 +233,8 @@ void prefix_notation(tree *t){
 
 }
 
-void infix_notation(tree *t){
-    if (empty_tree(t))
-        return;
-    
+
+void infix_notation(tree *t) {
     if (t->left != NULL)
         infix_notation(t->left);
     
@@ -243,19 +244,24 @@ void infix_notation(tree *t){
         infix_notation(t->right);
 }
 
-void infix_print(tree *t){
-    printf("]== Infix Notation ==[\n\n");
-    printf("\t");
-    infix_notation(t);
-    printf("\n\n");
+
+void infix_print(tree *root) {
+    if (!empty_tree(root)) {
+        printf("]== Infix Notation ==[\n\n");
+        printf("\t");
+        infix_notation(root);
+        printf("\n\n");
+    }
 }
 
 
-void prefix_print(tree *t){
-    printf("]== Prefix Notation ==[\n\n");
-    printf("\t");
-    prefix_notation(t);
-    printf("\n\n");
+void prefix_print(tree *root) {
+    if (!empty_tree(root)) {
+        printf("]== Prefix Notation ==[\n\n");
+        printf("\t");
+        prefix_notation(root);
+        printf("\n\n");
+    }
 }
 
 /*===========================================================
@@ -289,7 +295,6 @@ void element_or_nil(tree *t) {
 
 int walk_menu (tree *t) {
     int direction;
-    
     // tree print
     print_tree(t);
 
@@ -329,7 +334,7 @@ void insert(tree *t){
     }
 }
 void insert_tree(tree *root) {
-    if (empty_tree(root));
+    if (!empty_tree(root))
         insert(root);
 }
 
@@ -346,7 +351,8 @@ void insert_tree(tree *root) {
     if (t->orientation != NULL) \
         function(t->orientation, element, deepness + 1);\
 
-void search(tree *t, meta_data element, int deepness){
+
+void search(tree *t, meta_data element, int deepness) {
     if (union_comparision  (element.data, t->element.data)) {
         printf("Found a element on deepness %d: ", deepness);
         print_element(element);
@@ -357,13 +363,12 @@ void search(tree *t, meta_data element, int deepness){
     walk(search, right);
 }
 
-void search_tree(tree *t){
-    if (t != NULL) {
+
+void search_tree(tree *root) {
+    if (!empty_tree(root)) {
         meta_data element;
         new_meta(&element);
-        search(t, element, 0);
-    } else {
-        printf("Empty tree!\n");
+        search(root, element, 0);
     }
 }
 
@@ -383,10 +388,8 @@ tree* null_branch(tree *t){
     // walk to right
     if (t != NULL)
         t->right = null_branch(t->right);
-    
     // free the pointer node
     free(t);
-    
     // points to nil
     t = NULL;
 
@@ -405,8 +408,7 @@ tree* remove_branch(tree *t, meta_data element, int deepness) {
             t->left = remove_branch(t->left, element, deepness + 1);
         if (t->right != NULL)
             t->right = remove_branch(t->right, element, deepness + 1);
-    }  
-    
+    }
     return t;
 }
 
@@ -457,24 +459,23 @@ void edit(tree *t){
         insert_data(t);
         return;
     }
-        
     else {
         int direction = walk_menu(t);
         if (direction == LEFT) {
             if (t->left != NULL){
                 edit(t->left);
             }
-            else{
+            else {
                 printf("Left node not started yet! Insert first.\n");
                 edit(t);
             }
         }
 
         else if (direction == RIGHT) {
-            if (t->right != NULL){
+            if (t->right != NULL) {
                 edit(t->right);
             }
-            else{
+            else {
                 printf("Right node not started yet! Insert first.\n");
                 edit(t);
             }
@@ -485,13 +486,39 @@ void edit(tree *t){
             edit(t);
         }
     } 
+}
+
+
+void edit_tree(tree *root){
+    if (!empty_tree(root))
+        edit(root);
+}
+
+/*===========================================================
+ *
+ *  -*-              The balance function               -*-
+ *
+ *===========================================================
+ */
+
+
+void transpose(tree *t) {
+
 
 }
 
-void edit_tree(tree *root){
+
+void balance(tree *t) {
+
+
+}
+
+
+void balance_tree(tree *root) {
     if(!empty_tree(root))
         edit(root);
 }
+
 
 /*===========================================================
  *
