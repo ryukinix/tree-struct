@@ -353,7 +353,7 @@ void insert_tree(tree *root) {
 
 
 void search(tree *t, meta_data element, int deepness) {
-    if (union_comparision  (element.data, t->element.data)) {
+    if (meta_comparision  (element, t->element)) {
         printf("Found a element on deepness %d: ", deepness);
         print_element(element);
         printf("\n");
@@ -398,7 +398,7 @@ tree* null_branch(tree *t){
 
 
 tree* remove_branch(tree *t, meta_data element, int deepness) {
-    if (union_comparision (element.data, t->element.data)) {
+    if (meta_comparision (element, t->element)) {
         printf("Deleted a delicious on deepness %d: ", deepness);
         print_element(element);
         printf("\n");

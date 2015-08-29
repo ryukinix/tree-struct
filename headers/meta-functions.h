@@ -35,12 +35,15 @@ void type_choose(meta_data *meta){
 
     switch(command){
         case 1:
+            puts("[integer]\n");
             meta->type = integer;
             break;
         case 2:
+            puts("[character]\n");
             meta->type = character;
             break;
         case 3:
+            puts("[real]\n");
             meta->type = real;
             break;
         default:
@@ -82,3 +85,9 @@ int union_comparision(something x, something y){
     return false;
 }
 
+int meta_comparision(meta_data x, meta_data y) {
+    if (x.type == y.type)
+        return union_comparision(x.data, y.data);
+    else
+        return false;
+}
