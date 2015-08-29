@@ -23,4 +23,5 @@ struct node {
  * A abstraction for tree
  *
  */
+ 
 typedef struct node tree;
