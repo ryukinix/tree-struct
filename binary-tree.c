@@ -122,20 +122,16 @@ int leaf_sum(tree *t, int leafs) {
 
 }
 
-int deepness_sum(tree *t, int deepness) {
+int deepness_count(tree *t, int deepness) {
     int left  = deepness;
     int right = deepness;
-    // verify the node is not null
-    if (t == NULL)
-        return deepness;
-
     // walk to left
     if (t->left != NULL)
-        left = deepness_sum(t->left, deepness + 1);
+        left = deepness_count(t->left, deepness + 1);
 
     // walk to right
     if (t->right != NULL)
-        right = deepness_sum(t->right, deepness + 1);
+        right = deepness_count(t->right, deepness + 1);
 
     return left >= right ? left : right;
 
@@ -154,20 +150,21 @@ void nodes_count(tree *t){
 
 
 void leaf_count(tree *t){
-    if (empty_tree(t))
+    if (empty_tree(t)){
         return;
     printf("]== Leafs Calculation ==[\n\n");
     int leafs = leaf_sum(t, 0);
     printf("Leafs: %d\n", leafs);
+    }
 }
 
 
-void deepness_count(tree *t){
-    if (empty_tree(t))
-        return;
-    printf("]== Deepness Calculation ==[\n\n");
-    int deepness = deepness_sum(t, 0);
-    printf("Deepness: %d\n", deepness);
+void deepness_print(tree *t){
+    if (!empty_tree(t)) {
+        printf("]== Deepness Calculation ==[\n\n");
+        int deepness = deepness_count(t, 0);
+        printf("Deepness: %d\n", deepness);
+    }
 }
 
 /*===========================================================
@@ -234,12 +231,23 @@ void prefix_notation(tree *t) {
 }
 
 
+void posfix_notation(tree *t) {
+    if (t->left != NULL)
+        posfix_notation(t->left);
+    if (t->right != NULL)
+        posfix_notation(t->right);
+
+    print_meta(t->element);
+    printf(" ");
+}
+
+
 void infix_notation(tree *t) {
     if (t->left != NULL)
         infix_notation(t->left);
     
     print_element(t->element);
-    
+
     if (t->right != NULL)
         infix_notation(t->right);
 }
@@ -254,6 +262,14 @@ void infix_print(tree *root) {
     }
 }
 
+void posfix_print(tree *root) {
+    if (!empty_tree(root)) {
+        printf("]== Posfix Notation ==[\n\n");
+        printf("\t");
+        posfix_notation(root);
+        printf("\n\n");
+    }
+}
 
 void prefix_print(tree *root) {
     if (!empty_tree(root)) {
@@ -263,6 +279,7 @@ void prefix_print(tree *root) {
         printf("\n\n");
     }
 }
+
 
 /*===========================================================
  *
@@ -292,6 +309,7 @@ void element_or_nil(tree *t) {
         printf("%p", t);
     printf("\n");
 }
+
 
 int walk_menu (tree *t) {
     int direction;
@@ -502,21 +520,48 @@ void edit_tree(tree *root){
  */
 
 
-void transpose(tree *t) {
+tree* balance_branch(tree *node, int diff) {
+    
+    if (diff > 1) {
+        return node;
+        
+    }
 
+    else if (diff < -1) {
+        return node;
+    }
 
+    return node;
 }
 
 
-void balance(tree *t) {
+tree* balance(tree *root) {
+    int left = 0;
+    int right = 0;
+    
+    // verify the deepness of near branches
+    if (root->left != NULL) 
+        left = deepness_count(root->left, 0);
+    if (root->right != NULL) 
+        right = deepness_count(root->right, 0);
 
+    // balance the branch if deepness difference' > 1
+    int diff = left - right;
+    if (abs(diff) > 1) 
+        root = balance_branch(root, diff);
 
+    // balance the others branches recursively
+    if (root->left != NULL) 
+        root->left = balance(root->left);
+    if (root->right != NULL)
+        root->right = balance(root->right);
+
+    return root;   
 }
-
 
 void balance_tree(tree *root) {
     if(!empty_tree(root))
-        edit(root);
+        balance(root);
 }
 
 
@@ -579,6 +624,9 @@ void menu(tree *t) {
         case 9:
             prefix_print(t);
             break;
+        case 10:
+            posfix_print(t);
+            break;
         case 11:
             infix_print(t);
             break;
@@ -589,7 +637,7 @@ void menu(tree *t) {
             leaf_count(t);
             break;
         case 15:
-            deepness_count(t);
+            deepness_print(t);
             break;
         case 0:
             printf("Exiting from universe...\n");

@@ -35,10 +35,8 @@ GPLv3
     - [ ] Sort
     - [ ] Notation
       - [X] Prefix
-      - [ ] Posfix
-      - [ ] Infix
-        - [X] Some implemantion
-        - [ ] Work Correct
+      - [X] Posfix
+      - [X] Infix
     - [ ] Balance
   - [X] Attributes
     - [X] Sum of nodes
