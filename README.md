@@ -11,8 +11,7 @@ That it's actual status of my implementation:
 ## Compiling and Using
 
 It's very simple, on main directory only do this:
-  * `make`
-  * `./binary-tree.out`
+  * `make && make run`
 
 ## Credits
 
@@ -33,12 +32,12 @@ GPLv3
     - [X] Search 
     - [X] Print 
     - [ ] Sort
-    - [ ] Notation
+    - [X] Notation
       - [X] Prefix
       - [X] Posfix
       - [X] Infix
     - [ ] Balance
-  - [X] Attributes
+  - [X] Attributes calculation
     - [X] Sum of nodes
     - [X] Sum of leafs
     - [X] Deepness
