@@ -11,11 +11,12 @@ That it's actual status of my implementation:
 ## Compiling and Using
 
 It's very simple, on main directory only do this:
-  * `make && make run`
+
+* `make && make run`
 
 ## Credits
 
-  * Me (Manoel Vilela)
+* Me (Manoel Vilela)
 
 ## License
 
