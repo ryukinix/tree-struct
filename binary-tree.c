@@ -150,12 +150,11 @@ void nodes_count(tree *t){
 
 
 void leaf_count(tree *t){
-    if (empty_tree(t)){
+    if (empty_tree(t))
         return;
     printf("]== Leafs Calculation ==[\n\n");
     int leafs = leaf_sum(t, 0);
     printf("Leafs: %d\n", leafs);
-    }
 }
 
 
